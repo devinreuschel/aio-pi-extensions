@@ -35,7 +35,10 @@ pnpm-debug.log*
 !.cursorignore
 
 # Claude
-.claude/settings.local.json
+.claude/
+AGENTS.md
+CLAUDE.md
+CLAUDE.local.md
 
 # VS Code
 .vscode/*
@@ -47,3 +50,6 @@ pnpm-debug.log*
 .idea/
 *.iml
 out/
+
+# myai
+.myai/

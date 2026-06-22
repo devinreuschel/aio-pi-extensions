@@ -8,8 +8,10 @@ Pi extension monorepo. Each extension is a self-contained directory under `exten
 ├── package.json          # pi manifest + workspaces
 ├── install.sh            # all / pick-some installer
 ├── shared/               # @aio-pi/shared workspace helpers
+├── docs/
+│   └── sandbox.example.json
 └── extensions/
-    └── hello/            # sample extension
+    └── sandbox-intercept/  # OS-level sandbox extension
 ```
 
 ## Install modes
@@ -27,7 +29,7 @@ pi install .
 ### Many (filtered)
 
 ```bash
-./install.sh hello other
+./install.sh sandbox-intercept
 ```
 
 Writes a filtered package entry to `~/.pi/agent/settings.json`:
@@ -35,7 +37,7 @@ Writes a filtered package entry to `~/.pi/agent/settings.json`:
 ```json
 {
   "source": "/path/to/aio-pi-extensions",
-  "extensions": ["extensions/hello/index.ts", "extensions/other/index.ts"]
+  "extensions": ["extensions/sandbox-intercept/index.ts"]
 }
 ```
 
@@ -44,10 +46,38 @@ For remote installs, swap `source` to `git:github.com/skid/aio-pi-extensions`.
 ### One (copy a single dir)
 
 ```bash
-cp -r extensions/hello ~/.pi/agent/extensions/
+cp -r extensions/sandbox-intercept ~/.pi/agent/extensions/
 ```
 
 Extensions that import `@aio-pi/shared` are not copy-one-dir portable. Use whole-repo or filtered install for those.
+
+## sandbox-intercept
+
+OS-level sandbox for pi (Seatbelt on macOS, Landlock+bubblewrap on Linux). Wraps bash and gates read/write/edit tool calls. Toggle on/off per session — standalone extension, no launcher required.
+
+```bash
+./install.sh sandbox-intercept
+pi -e extensions/sandbox-intercept
+```
+
+| Control | Effect |
+|---------|--------|
+| `--no-sandbox` | Disable sandboxing for this session |
+| `/sandbox` | Show active filesystem and network policy |
+| `SANDBOX_INTERCEPT_DISABLE=1` | Disable via environment |
+
+### Config
+
+Layered (project overrides user):
+
+- `<project>/.pi/sandbox.json`
+- `~/.pi/agent/sandbox.json`
+
+See [docs/sandbox.example.json](docs/sandbox.example.json). Provider presets (`anthropic`, `openai`, `llama.cpp`, etc.) expand to allowed domains for bash network policy.
+
+### Security (honest)
+
+Mistake-resistance, not adversarial containment. See [SECURITY.md](SECURITY.md).
 
 ## Development
 

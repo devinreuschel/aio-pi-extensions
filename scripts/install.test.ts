@@ -43,16 +43,16 @@ afterEach(async () => {
 
 describe("install.sh filtered install", () => {
   test("creates settings with package entry on fresh file", async () => {
-    const { exitCode, stdout } = await runInstall("hello");
+    const { exitCode, stdout } = await runInstall("sandbox-intercept");
 
     expect(exitCode).toBe(0);
-    expect(stdout).toContain(`installed hello -> ${settingsPath}`);
+    expect(stdout).toContain(`installed sandbox-intercept -> ${settingsPath}`);
 
     const settings = await readSettings();
     expect(settings.packages).toEqual([
       {
         source: REPO_ROOT,
-        extensions: ["extensions/hello/index.ts"],
+        extensions: ["extensions/sandbox-intercept/index.ts"],
       },
     ]);
   });
@@ -72,14 +72,14 @@ describe("install.sh filtered install", () => {
       }),
     );
 
-    const { exitCode } = await runInstall("hello");
+    const { exitCode } = await runInstall("sandbox-intercept");
     expect(exitCode).toBe(0);
 
     const settings = await readSettings();
     expect(settings.packages).toHaveLength(1);
     expect(settings.packages?.[0]).toEqual({
       source: REPO_ROOT,
-      extensions: ["extensions/hello/index.ts"],
+      extensions: ["extensions/sandbox-intercept/index.ts"],
     });
   });
 
@@ -90,7 +90,7 @@ describe("install.sh filtered install", () => {
       JSON.stringify({ packages: [other] }),
     );
 
-    const { exitCode } = await runInstall("hello");
+    const { exitCode } = await runInstall("sandbox-intercept");
     expect(exitCode).toBe(0);
 
     const settings = await readSettings();
@@ -98,7 +98,7 @@ describe("install.sh filtered install", () => {
     expect(settings.packages?.[0]).toEqual(other);
     expect(settings.packages?.[1]).toEqual({
       source: REPO_ROOT,
-      extensions: ["extensions/hello/index.ts"],
+      extensions: ["extensions/sandbox-intercept/index.ts"],
     });
   });
 

@@ -12,5 +12,9 @@
       "@aio-pi/shared/testing": ["./shared/src/testing.ts"]
     }
   },
-  "include": ["shared/**/*.ts", "extensions/**/*.ts", "scripts/**/*.ts"]
+  "include": [
+    "shared/**/*.ts",
+    "extensions/**/*.ts",
+    "scripts/**/*.ts"
+  ]
 }

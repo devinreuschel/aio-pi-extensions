@@ -1,0 +1,12 @@
+{
+  "network": {
+    "providers": ["anthropic"],
+    "allowedDomains": ["api.example.com"]
+  },
+  "filesystem": {
+    "denyRead": ["/Users", "/home"],
+    "allowRead": [".", "~/.config", "~/.local"],
+    "allowWrite": [".", "/tmp"],
+    "denyWrite": [".env", ".env.*", "*.pem", "*.key"]
+  }
+}

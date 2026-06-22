@@ -1,0 +1,15 @@
+{
+  "name": "@aio-pi/sandbox-intercept",
+  "version": "0.1.0",
+  "type": "module",
+  "keywords": ["pi-package", "pi-extension"],
+  "pi": {
+    "extensions": ["./index.ts"]
+  },
+  "dependencies": {
+    "@carderne/sandbox-runtime": "^0.0.49"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  }
+}
