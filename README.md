@@ -14,7 +14,8 @@ Pi extension monorepo. Each extension is a self-contained directory under `exten
 └── extensions/
     ├── sandbox-intercept/  # OS-level sandbox extension
     ├── permission-gate/    # interactive tool permission prompts
-    └── plan-mode/          # read-only plan + tracked execution
+    ├── plan-mode/          # read-only plan + tracked execution
+    └── todo-list/          # session todo list (tool + slash commands)
 ```
 
 ## Install modes
@@ -105,6 +106,25 @@ Layered (user + project):
 - `~/.pi/agent/permissions.json`
 
 See [docs/permissions.example.json](docs/permissions.example.json).
+
+## todo-list
+
+Session-scoped todo list for multi-step work. The agent uses a `todo_write` tool; you manage items with slash commands. Progress shows in a widget above the editor and a status counter. State persists per session and restores on resume.
+
+```bash
+./install.sh todo-list
+pi -e extensions/todo-list
+```
+
+| Control | Effect |
+|---------|--------|
+| `todo_write` tool | Agent creates/updates todos (merge by id) |
+| `/todo` | List todos |
+| `/todo add <text>` | Add a todo |
+| `/todo start\|done\|cancel <#\|id>` | Change status |
+| `/todo rm <#\|id>` | Remove a todo |
+| `/todo clear` | Clear the list |
+| Ctrl+Alt+T | Toggle widget visibility |
 
 ## Development
 
