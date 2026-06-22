@@ -54,9 +54,16 @@ Extensions that import `@aio-pi/shared` are not copy-one-dir portable. Use whole
 ```bash
 bun install
 bun run check
+bun test
 ```
 
 Pi loads `.ts` at runtime via jiti. Typecheck locally; no build step required.
+
+### Testing
+
+Tests are colocated as `*.test.ts` next to the code they cover. Run the full suite with `bun test`, watch mode with `bun run test:watch`, or coverage with `bun run test:coverage`.
+
+Extension tests use `createMockExtensionAPI()` from `@aio-pi/shared/testing` to capture `registerTool` calls and `runTool()` to exercise tool `execute` handlers without a live Pi session. Add a matching `index.test.ts` when you add a new extension.
 
 ## Adding an extension
 

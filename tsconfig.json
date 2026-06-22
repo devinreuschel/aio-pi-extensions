@@ -6,7 +6,11 @@
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node", "bun"],
+    "paths": {
+      "@aio-pi/shared": ["./shared/src/index.ts"],
+      "@aio-pi/shared/testing": ["./shared/src/testing.ts"]
+    }
   },
-  "include": ["shared/**/*.ts", "extensions/**/*.ts"]
+  "include": ["shared/**/*.ts", "extensions/**/*.ts", "scripts/**/*.ts"]
 }

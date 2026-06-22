@@ -1,0 +1,6 @@
+[test]
+coverage = true
+coverageSkipTestFiles = true
+coveragePathIgnorePatterns = ["shared/src/testing.ts"]
+coverageThreshold = { lines = 0.9, functions = 0.9, statements = 0.9 }
+coverageReporter = ["text"]
