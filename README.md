@@ -9,9 +9,12 @@ Pi extension monorepo. Each extension is a self-contained directory under `exten
 ├── install.sh            # all / pick-some installer
 ├── shared/               # @aio-pi/shared workspace helpers
 ├── docs/
-│   └── sandbox.example.json
+│   ├── sandbox.example.json
+│   └── permissions.example.json
 └── extensions/
-    └── sandbox-intercept/  # OS-level sandbox extension
+    ├── sandbox-intercept/  # OS-level sandbox extension
+    ├── permission-gate/    # interactive tool permission prompts
+    └── plan-mode/          # read-only plan + tracked execution
 ```
 
 ## Install modes
@@ -78,6 +81,30 @@ See [docs/sandbox.example.json](docs/sandbox.example.json). Provider presets (`a
 ### Security (honest)
 
 Mistake-resistance, not adversarial containment. See [SECURITY.md](SECURITY.md).
+
+## permission-gate
+
+Interactive permission prompts for bash, write, and edit tool calls. Read-only tools pass through. Unmatched gated calls show a popup: allow once, allow for session, allow always, skip, or stop.
+
+```bash
+./install.sh permission-gate
+pi -e extensions/permission-gate
+```
+
+| Control | Effect |
+|---------|--------|
+| `--no-permissions` | Disable prompts for this session |
+| `/permissions` | Show active allow/deny policy |
+| `PI_PERMISSIONS_DISABLE=1` | Disable via environment |
+
+### Config
+
+Layered (user + project):
+
+- `<project>/.pi/permissions.json`
+- `~/.pi/agent/permissions.json`
+
+See [docs/permissions.example.json](docs/permissions.example.json).
 
 ## Development
 

@@ -1,0 +1,12 @@
+{
+  "gate": ["bash", "write", "edit"],
+  "allow": [
+    { "tool": "bash", "match": "prog:git" },
+    { "tool": "bash", "match": "prefix:npm run " },
+    { "tool": "write", "match": "src/**" }
+  ],
+  "deny": [
+    { "tool": "bash", "match": "re:rm\\s+-rf" },
+    { "tool": "bash", "match": "prog:sudo" }
+  ]
+}
