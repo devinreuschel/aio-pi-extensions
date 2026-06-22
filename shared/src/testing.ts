@@ -13,6 +13,9 @@ export interface MockExtensionAPI {
   shortcuts: { shortcut: string; options: unknown }[];
   flags: { name: string; options: unknown }[];
   handlers: { event: string; handler: EventHandler }[];
+  activeTools: string[];
+  allTools: { name: string }[];
+  entries: { customType: string; data: unknown }[];
 }
 
 /** stub ExtensionAPI that records registrations */
@@ -22,6 +25,9 @@ export function createMockExtensionAPI(): MockExtensionAPI {
   const shortcuts: { shortcut: string; options: unknown }[] = [];
   const flags: { name: string; options: unknown }[] = [];
   const handlers: { event: string; handler: EventHandler }[] = [];
+  let activeTools: string[] = ["read", "bash", "edit", "write", "grep", "find", "ls"];
+  const allTools = activeTools.map((name) => ({ name }));
+  const entries: { customType: string; data: unknown }[] = [];
 
   const api = {
     on(event: string, handler: EventHandler) {
@@ -42,12 +48,36 @@ export function createMockExtensionAPI(): MockExtensionAPI {
     getFlag() {
       return undefined;
     },
+    getActiveTools() {
+      return [...activeTools];
+    },
+    getAllTools() {
+      return [...allTools];
+    },
+    setActiveTools(toolNames: string[]) {
+      activeTools = [...toolNames];
+    },
+    appendEntry(customType: string, data: unknown) {
+      entries.push({ customType, data });
+    },
     registerMessageRenderer() {},
     sendMessage() {},
     sendUserMessage() {},
   } as unknown as ExtensionAPI;
 
-  return { api, tools, commands, shortcuts, flags, handlers };
+  return {
+    api,
+    tools,
+    commands,
+    shortcuts,
+    flags,
+    handlers,
+    get activeTools() {
+      return activeTools;
+    },
+    allTools,
+    entries,
+  };
 }
 
 /** minimal ExtensionContext for tool.execute */
